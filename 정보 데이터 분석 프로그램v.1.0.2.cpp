@@ -4,7 +4,7 @@
    =  기업의 영업이익과 단기순이익에 따른 주가 변화 및 추세 파악   =
    =                        제작자: 정찬웅                         =
    =                                                               =
-   =                                                     ver.1.0.1 =
+   =                                                     ver.1.0.2 =
    =================================================================
 */
 
@@ -27,10 +27,10 @@ int lim_range_company_1[100]={0,4,4,4,4,4,4};  //기업의 데이터 사용 가능 최대 범
 const char* company_name[100]={0,"SAMSUNG","APPLE","AMAZON","MICROSOFT","TSMC","SK hynix"};
 const char* unit[100]={0,"조","백만USD","백만USD","백만USD","백만USD","조"}; //당기순이익, 영엉이익 단위 배열 
 const char* unit_st[100]={0,"KRW","USD","USD","USD","USD","KRW"}; //주식 단위 배열  
-void draw_x(int start_company ,int start_company_Q,int finish_company,int finish_company_Q,int max_a_y, int min_a_y );//x축 그리기 
+int draw_X(int start_company ,int start_company_Q,int finish_company,int finish_company_Q,int max_a_y, int min_a_y );//x축 그리기 
 void draw_y ( int max_a_y, int min_a_y); //y축 그리기 unit  
 void print_x(int k, int x, int y, int width,int sc ,int scq,int fc,int fcq); //x축 그리는 함수 
-void draw_x_d(int t,int n); // x축 밑 부분 그리는 함수 
+int draw_x_d(int t,int n); // x축 밑 부분 그리는 함수 
 void gotoxy(int x, int y);
 void print_com(int k,int x, int y,int sc ,int scq); //x축에 년도, 분기 적기 
 void axis( int start_company ,int start_company_Q,int finish_company,int finish_company_Q,int max_a_y, int min_a_y,int max_st,int min_st ); // 좌표축 나타내기 
@@ -379,7 +379,7 @@ void draw_st_d(int t,int n){ // 주식 축 밑 부분 그리는 함수
 	}
 }
 
-void draw_x_d(int t,int n){ // x축 밑 부분 그리는 함수 
+int draw_x_d(int t,int n){ // x축 밑 부분 그리는 함수 
 	if(!t){
 		for (int i = n+6; i<=(n+10);i++){
 			gotoxy(9,i);
@@ -407,7 +407,7 @@ void write_x(int com, int comQ){
 } 
 
 // p는 x축을 그래프에서 무슨 y좌표에 입력해야 하는지 입력해주는 변수  draw_y의 n+8이 p로 입력되면 된다. 
-void draw_x(int start_company ,int start_company_Q,int finish_company,int finish_company_Q,int max_a_y, int min_a_y ){ //x축 그리기 데이터 범위를 받은 뒤 단위 표시 하기 
+int draw_x(int start_company ,int start_company_Q,int finish_company,int finish_company_Q,int max_a_y, int min_a_y ){ //x축 그리기 데이터 범위를 받은 뒤 단위 표시 하기 
 	int p=0;
 	if (y_a_dif(max_a_y,min_a_y)) p=150;
 	else p=104;
@@ -434,6 +434,7 @@ void draw_x(int start_company ,int start_company_Q,int finish_company,int finish
 	}
 //	gotoxy(9+2*width,150);
 //	printf("%d",(9+width));
+	return width+9;
 }
 
 void print_x(int k, int x, int y, int width,int sc ,int scq,int fc,int fcq){ //x축 ---| 한 번 그리는 함수 
@@ -463,6 +464,7 @@ void print_com(int k, int x, int y,int sc ,int scq){ //x축에 년도, 분기 적기
 		gotoxy(x,y);
 		printf("(년도)");
 		gotoxy(x,y+1);
+		
 		printf("  |");
 		gotoxy(x,y+2);
 		printf("(분기)");
