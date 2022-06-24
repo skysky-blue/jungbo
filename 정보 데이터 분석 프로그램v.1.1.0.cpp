@@ -4,7 +4,7 @@
    =  기업의 영업이익과 당기순이익에 따른 주가 변화 및 추세 파악   =
    =                        제작자: 정찬웅                         =
    =                                                               =
-   =                                                     ver.1.0.8 =
+   =                                                     ver.1.1.0 =
    =================================================================
 */
 
@@ -32,7 +32,7 @@ int lim_range_company[100]={0,2021,2020,2020,2020,2020,2021};  //기업의 데이터 �
 int lim_range_company_1[100]={0,4,4,4,4,4,4};  //기업의 데이터 사용 가능 최대 범위에서 년도 표시 배열 
 int index_com[100]={0,48,44,44,44,44,48}; //기업의 데이터 분기 수 
 const char* company_name[100]={0,"SAMSUNG","APPLE","AMAZON","MICROSOFT","TSMC","SK hynix"};
-const char* unit[100]={0,"조","백만USD","백만USD","백만USD","백만USD","조"}; //당기순이익, 영엉이익 단위 배열 
+const char* unit[100]={0,"백억KRW","백만USD","백만USD","백만USD","백만USD","백억KRW"}; //당기순이익, 영엉이익 단위 배열 
 const char* unit_st[100]={0,"KRW","USD","USD","USD","USD","KRW"}; //주식 단위 배열 
 const char *filename[100]={0,"samsung.txt","apple.txt","amazon.txt","microsoft.txt","tsmc.txt","sk hynix.txt"}; //파일 불러올 때 이름 배열 선언 filename[company]하면 그 회사의 파일 이름이 나옴 
 int draw_X(int start_company ,int start_company_Q,int finish_company,int finish_company_Q,int max_a_y, int min_a_y );//x축 그리기 
@@ -88,6 +88,7 @@ double min(double x, double y); //최솟값 반환해주는 함수
 double max_a_y_1, min_a_y_1 ,max_b_y_1, min_b_y_1, max_st_1, min_st_1; //max함수,min함수 만들고 나서 적기 
 int maxd[20][20][20]; //max값 저장해주는 3차원 배열 1은 당기 순이익, 2은 영업이익, 3는 주가 
 int mind[20][20][20]; //min값 저장해주는 3차원 배열 1은 당기 순이익, 2은 영업이익, 3는 주가 
+int yeop_gr(int max_b_y, int min_b_y, int wid, int dangiwid, int start_company, int start_company_Q, int finish_company, int finish_company_Q); //영업이익 그래프 그리기 
 
 
 
@@ -106,7 +107,7 @@ int main(){
 //		printf("%d",company); 
 		excel_true = excel(); // 만약 파일이 정상적으로 읽어졌다면 index값이 반환된다. 
 		gotoxy(10,10);
-		printf("%d",excel_true);
+//		printf("%d",excel_true);
 		mami_data(start_data,index_com[company]);
 		gotoxy(20,20);
 		
@@ -127,6 +128,7 @@ int main(){
 			gotoxy(1,1);
 			printf("※노란색은 당기순이익, 파란색은 영업이익, 초록색은 주가를 나타낸 것입니다.※");
 			dan_gr(max_a_y_1,min_a_y_1,wi,dangiwi,s_com,s_comQ,f_com,f_comQ);
+			yeop_gr(max_a_y_1,min_a_y_1,wi,dangiwi,s_com,s_comQ,f_com,f_comQ);
 			while (true){
 				int i=1;
 			}
@@ -649,6 +651,18 @@ int dan_gr(int max_a_y, int min_a_y,int wid, int dangiwid,int start_company ,int
 	} 
 	textc(15);
 //	gotoxy()
+}
+
+int yeop_gr(int max_b_y, int min_b_y, int wid, int dangiwid, int start_company, int start_company_Q, int finish_company, int finish_company_Q){ //영업이익 그래프 그리기 
+	int po_ind=(start_company-2010)*4+start_company_Q; //시작하는 데이터 범위가 comp구조체의 몇번째 index에 위치해있는지 확인해주는 변수이다.
+	float yeop_y=0; //영업이익이 그래프에서 어느 위치에 프린트 해야하는지 입력해주는 변수
+	textc(11);
+	for (int i=1; i<=term; i++){
+		yeop_y=6+(36-(comp[i+po_ind-1].yeop/dangiwid))*4;
+		gotoxy((i*wid)+9,yeop_y);
+		printf("*");
+	} 
+	textc(15);
 }
 
 double min(double x, double y) {return x < y ? x : y ;}
