@@ -112,19 +112,14 @@ int main(){
 		}
 		company_position=select();
 		start_data=(range_company[company]-2010)*4+1; 
-//		printf("%d",company); 
 		excel_true = excel(); // 만약 파일이 정상적으로 읽어졌다면 index값이 반환된다. 
 		gotoxy(10,10);
-//		printf("%d",excel_true);
 		mami_data(start_data,index_com[company]);
 		gotoxy(20,20);
 		
 		maxd[company][1][1] = floor(max_a_y_1+0.5),maxd[company][2][1]=(max_b_y_1+0.5),maxd[company][3][1]=(max_st_1+0.5);
 		mind[company][1][1] = floor(min_a_y_1+0.5),mind[company][2][1]=(min_b_y_1+0.5),mind[company][3][1]=(min_st_1+0.5);
-//		printf("%lf %lf %lf %lf %lf %lf",max_a_y_1,min_a_y_1,max_b_y_1,min_b_y_1,max_st_1,min_st_1) ;
 		
-//		printf("%d",excel_true); 
-//		printf("%s",filename[company]);
 		if (excel_true !=-1){
 			menu_2(company_position); //데이터 범위 물어보고 데이터 범위 시작 년도, 분기, 끝나는 년도, 분기 받기 
 			
@@ -132,9 +127,8 @@ int main(){
 			
 			axis(s_com,s_comQ,f_com,f_comQ,maxd[company][1][1],mind[company][1][1],maxd[company][3][1],mind[company][3][1],maxd[company][2][1],mind[company][2][1]); //나중에 여기 당기순이익, 주가, 영업이익 입력해주기 wid는 x축 상에서 데이터 값의 너비, 여기다 +9를 해주면 넣어야할 데이터의 x좌표가 나온다. 
 			gotoxy(20,10);
-//			printf("%d",wid);
 			gotoxy(1,1);
-			printf("※노란색은 당기순이익, 파란색은 영업이익, 초록색은 주가를 나타낸 것입니다.※");
+			printf("※빨간색은 당기순이익, 파란색은 영업이익, 초록색은 주가를 나타낸 것입니다. 하얀 별은 선형회귀한 그래프입니다.※");
 			dan_gr(maxd[company][1][1],mind[company][1][1],wi,dangiwi,s_com,s_comQ,f_com,f_comQ);
 			yeop_gr(maxd[company][2][1],mind[company][2][1],wi,dangiwi,s_com,s_comQ,f_com,f_comQ);
 			st_gr(maxd[company][3][1],mind[company][3][1],wi,stockwi,s_com,s_comQ,f_com,f_comQ);
@@ -162,8 +156,6 @@ int start(){   // 처음 시작 창을 띄우는 함수
 	position = 0;
 	text_data(restart,position); 
 	int keyboard_input = 0; //키보드에서 방향키 입력 받는 변수
-//	if (restart == 0) printf("프로그램을 실행시키시겠습니까?");
-//    else printf("프로그램을 다시 실행시키시겠습니까?");
 	
 	while(true){
 
@@ -314,12 +306,9 @@ int menu_2(int company){
 						if (start_company_Q < finish_company_Q){ //끝나는 분기가 시작 분기보다 커야한다. 
 							re=0;
 							system("cls");
-//							printf("%d",start_company_Q);
 
 							s_com=start_company,s_comQ=start_company_Q,f_com=finish_company,f_comQ =finish_company_Q;
 							return 0;
-//							gotoxy(25,15); 
-//							printf("%d, %d, %d, %d",start_company, start_company_Q, finish_company, finish_company_Q);
  
 						}
 						else{
@@ -330,7 +319,6 @@ int menu_2(int company){
 						re=0;
 						system("cls");
 						s_com=start_company,s_comQ=start_company_Q,f_com=finish_company,f_comQ =finish_company_Q;
-//						printf("%d",start_company_Q);
 
 						return 0;
 					}
@@ -355,7 +343,6 @@ void gotoxy(int x, int y){
 void textc(int colorNum) { //텍스트 색상 바꾸는 함수 https://dev-with-precious-dreams.tistory.com/m/entry/C%EC%96%B8%EC%96%B4-%EC%BD%98%EC%86%94%EC%B0%BD%EC%97%90-%EC%B6%9C%EB%A0%A5%EB%90%98%EB%8A%94-%EA%B8%80%EC%9E%90%EC%83%89-%EB%B0%94%EA%BE%B8%EB%8A%94-%EB%B0%A9%EB%B2%95 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), colorNum);
 }
-
 int y_a_dif(int max_a_y, int min_a_y){ // y의 max값의 1/3이 min값보다 큰지 작은지 알려주는 함수 크면 1을 작으면 0을 return한다.  
 	return max_a_y/3 > min_a_y;
 }
@@ -365,24 +352,6 @@ int y_a_gap(int max_a_y, int min_a_y){ // y간격 계산 해주는 함수 max_a_y, min_a_
 	y_a_gap = max_a_y / 36 ;
 	return y_a_gap;
 } 
-
-//void delay(clock_t n)
-//
-//{
-//
-//  clock_t start = clock();
-//
-//  while(clock() - start < n);
-//
-//}
-
-//void unityd(int a, int b, int t){ //y축에 단위 입력해주는 함수 중 반복되는 코드 
-//	textc(a);
-//	if (t==0)	printf("(%s)",unit[company]);
-//	elif (t==1) printf("(%s)",unit_st[company])
-//	elif(t==2) printf("(%s)",)
-//	textc(b);
-//}    지금 생각해보니 딱히 필요가 없음 단기 순이익 하고 영업 이익은 단위 같음 구별할 필요 x 
 
 void unit_y(){ //y 축에 단위 입력해주는 함수
 	int company_s = company; //전역변수 company에서 받아오기 
@@ -410,7 +379,7 @@ int draw_y ( int max_a_y, int min_a_y, int max_b_y, int min_b_y){ //y축 그리기
 			gotoxy(9,i);
 			printf("-");
 			gotoxy(1,i); // y축에 단위 표시를 한다. max_a_y이용 
-			danwi(14,15,k,max_a_y,min_a_y);
+			danwi(12,15,k,max_a_y,min_a_y);
 			gotoxy(1,i+1); // y축에 당기순이익 밑에 영업이익을 표시한다 max_b_y이용 
 			danwi (11,15,k,max_b_y,min_b_y);
 			k++;
@@ -464,13 +433,7 @@ void draw_st (int max_st, int min_st,int max_a_y, int min_a_y){ //y축 그리기
 			gotoxy(stx,n+i);
 			printf("|");
 		}
-		
-//		draw_x_d(y_a_dif(max_a_y,min_a_y),n);
-	}
-//	else{
-//		draw_x_d(y_a_dif(max_a_y,min_a_y),n); //y_a_dif 가 1인 상황 
-//	}
-	
+	}	
 }
 
 int stc_gap(int max_st){ // y간격 계산 해주는 함수 max_a_y, min_a_y 는 그 기업 주식의 최대 당기순이익과 최소 당기순이익을 입력해준다. 
@@ -517,10 +480,6 @@ int draw_x_d(int t,int n){ // x축 밑 부분 그리는 함수
 	}
 }
 
-void write_x(int com, int comQ){
-//	printf// 
-} 
-
 // p는 x축을 그래프에서 무슨 y좌표에 입력해야 하는지 입력해주는 변수  draw_y의 n+8이 p로 입력되면 된다. 
 int draw_x(int start_company ,int start_company_Q,int finish_company,int finish_company_Q,int max_a_y, int min_a_y ){ //x축 그리기 데이터 범위를 받은 뒤 단위 표시 하기 
 	int p=0;
@@ -530,12 +489,7 @@ int draw_x(int start_company ,int start_company_Q,int finish_company,int finish_
 	int width = 0; // x축에 년도, 분기 입력할 때 서로 간의 너비 저장해주는 변수 
 	term = (finish_company-start_company)*4+(finish_company_Q-start_company_Q)+1; //이런 식을 사용하면 데이터 범위 사이에 총 몇 분기가 있는지 확인 가능하다. 
 	width = 90/term;
-//	if (width * term >90){
-//		width --; //width가 나누어
-//	}
-	gotoxy(50,200); 
-//	printf("%d",width);
-	
+	gotoxy(50,200); 	
 	for (int i = 0; i<=(term); i++){
 		if (i<=(term-1)){
 			print_x(1,(i*width)+10,p,width,start_company,start_company_Q,finish_company,finish_company_Q);
@@ -547,8 +501,6 @@ int draw_x(int start_company ,int start_company_Q,int finish_company,int finish_
 			printf("-");
 		}
 	}
-//	gotoxy(9+2*width,150);
-//	printf("%d",(9+width));
 	return width;
 }
 
@@ -611,23 +563,9 @@ int excel(){ //데이터 불러와주는 함수
 	
 	while(!feof(fp)){ //파일의 끝까지만 true 
 		fscanf(fp,"%lf,%lf,%lf,%lf",&comp[index].date,&comp[index].dangi,&comp[index].yeop,&comp[index].stck);
-//		printf("%5.5lf:date %5d:dangi %5d:yeop %5.5lf:stck\n",comp[index].date,comp[index].dangi,comp[index].yeop,comp[index].stck);
-//		char p[150]; 
-//		fgets(line,1024,fp); //한 라인값을 받아온 후 p에 저장시킨다. 
-//		char *ptr = strtok(p,",");
-//		scanf("%s",comp[index].date);
-//		ptr=strtok(NULL,",");
-//		while(ptr != NULL){
-//			scanf("%f",com)
-//		}
-
-//		sscanf(line, "%lf %d %lf %lf",&comp[index].date,&comp[index].dangi,&comp[index].yeop,&comp[index].stck); // 년도_분기, 당기순이익, 영업이익, 평균 주가 입력 받기 
 		index++;
 	}
 	return (index-1);
-//	for (int i = 1; i<(index); i++){  //파일 읽어서 입력해주기 (test용도) 
-//		printf("%5.1lf:date, %5.3lf:dangi, %5.3lf:yeop, %5.0lf:stck\n",comp[i].date,comp[i].dangi,comp[i].yeop,comp[i].stck);
-//	}
 } 
 
 double mami_data(int start_data, int index){ //max값,min값 반환해주는 함수 
@@ -639,7 +577,6 @@ double mami_data(int start_data, int index){ //max값,min값 반환해주는 함수
 	for (int i =start_data; i <index; i++){
 		max_data=max(comp[i].dangi,max_data);
 		min_data=min(comp[i].dangi,min_data);
-//		printf("%5.5lf , %5.5lf\n",max_data,min_data);
 	}
 	for (int i =start_data; i <=index; i++){
 		max_data_ye=max(comp[i].yeop,max_data_ye);
@@ -650,23 +587,19 @@ double mami_data(int start_data, int index){ //max값,min값 반환해주는 함수
 		min_data_st=min(comp[i].stck,min_data_st);
 		
 	}
-//	printf("%lf %lf %lf %lf %lf %lf",max_data, min_data,max_data_ye,min_data_ye,max_data_st,min_data_st );
 	 max_a_y_1 =max_data, min_a_y_1=min_data , max_b_y_1=max_data_ye, min_b_y_1=min_data_ye,max_st_1=max_data_st, min_st_1=min_data_st;
 }
 
 int dan_gr(int max_a_y, int min_a_y,int wid, int dangiwid,int start_company ,int start_company_Q,int finish_company,int finish_company_Q){ //당기 순이익 그래프 그려주는 함수 
 	int po_ind=(start_company-2010)*4+start_company_Q; //시작하는 데이터 범위가 comp구조체의 몇번째 index에 위치해있는지 확인해주는 변수이다.
 	float dangi_y=0; //당기순이익이 그래프에서 어느 위치에 있는지 저장해주는 변수 
-	textc(14);
+	textc(12);
 	for (int i=1; i<=term;i++){
 		dangi_y= 6+(36-(comp[i+po_ind-1].dangi/dangiwid))*4;
-//		gotoxy(50,i+20);
-//		printf("%f",dangi_y);
 		gotoxy((i*wid)+9,dangi_y);
 		printf("* ");
 	} 
 	textc(15);
-//	gotoxy()
 }
 
 int yeop_gr(int max_b_y, int min_b_y, int wid, int dangiwid, int start_company, int start_company_Q, int finish_company, int finish_company_Q){ //영업이익 그래프 그리기 
@@ -674,11 +607,9 @@ int yeop_gr(int max_b_y, int min_b_y, int wid, int dangiwid, int start_company, 
 	float yeop_y=0; //영업이익이 그래프에서 어느 위치에 프린트 해야하는지 입력해주는 변수
 	textc(11);
 	gotoxy(50,50);
-	printf("%d",wid);
 	for (int i=1; i<=term; i++){
 		yeop_y=6+(36-(comp[i+po_ind-1].yeop/dangiwid))*4;
 		gotoxy(i*wid+9,yeop_y);
-//		printf("%d",((i*wid)+9)); 
 		printf("* ");
 	} 
 	textc(15);
@@ -738,17 +669,11 @@ double linear(int wid,int dangiwi ,int stockwi, int start_company, int start_com
 	Exd( wid, dangiwi , stockwi,  start_company,  start_company_Q,  finish_company,  finish_company_Q);
 	inclines = incline( wid, dangiwi , stockwi,  start_company,  start_company_Q,  finish_company,  finish_company_Q);
 	y_jeon=y_jeol(inclines);
-	for (int x=1; x<=wid*term+1;x++){
+	for (int x=1; x<=wid*term;x++){
 		if (!(inclines*(x+9)+y_jeon<4) && !(inclines*(x+9)+y_jeon>149)) {gotoxy((x+9),inclines*(x+9)+y_jeon); printf("*");}
 	}
 	
 } 
-
 double min(double x, double y) {return x < y ? x : y ;}
 double max(double x, double y) {return x > y ? x : y ;}
 
-
-
-int graph(int max_a_y, int min_a_y,int max_st, int min_st,int wid, int dangiwid, int stockwid,int start_company ,int start_company_Q,int finish_company,int finish_company_Q ){ //그래프에 데이터 값을 *로 표시해주는 함수 
-	
-} 
